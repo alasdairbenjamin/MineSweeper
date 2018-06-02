@@ -20,7 +20,7 @@ namespace MineSweeperUnitTests
             const int indexTwo = 3;
             var intArray = new[] { 1, 2, 3, 4 };
             var expectedIntOne = intArray[indexTwo];
-            var expectedIntTwo = intArray[indexTwo];
+            var expectedIntTwo = intArray[indexOne];
 
             //Act
             intArray.Swap(indexOne, indexTwo);
@@ -39,7 +39,7 @@ namespace MineSweeperUnitTests
             const int indexTwo = 2;
             var stringArray = new[] { "one", "two", "three"};
             var expectedStringOne = stringArray[indexTwo];
-            var expectedStringTwo = stringArray[indexTwo];
+            var expectedStringTwo = stringArray[indexOne];
 
             //Act
             stringArray.Swap(indexOne, indexTwo);
@@ -47,25 +47,6 @@ namespace MineSweeperUnitTests
             //Assert
             Assert.AreEqual(expectedStringOne, stringArray[indexOne]);
             Assert.AreEqual(expectedStringTwo, stringArray[indexTwo]);
-        }
-
-        [Test]
-        public void TestForEachWithSimpleActionOnIntegerList()
-        {
-            //Arrange
-            const int intOne = 3;
-            const int intTwo = 5;
-            const int intThree = 7;
-            var action = new Action<int>(x => x++);
-            var intList = new List<int> { intOne, intTwo, intThree };
-            var expectedResult = new List<int> { intOne + 1, intTwo + 1, intThree + 1 };
-
-            //Act
-            intList.ForEach(action);
-
-            //Assert
-            CollectionAssert.AreEqual(expectedResult, intList);
-
         }
 
         [Test]

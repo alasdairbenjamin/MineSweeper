@@ -24,11 +24,11 @@ namespace MineSweeper
             var colIndex = pos.Column;
             var rowMultipliers = new List<int> { 0 };
             if (rowIndex != 0) rowMultipliers.Add(-1);
-            if (rowIndex != totalRows) rowMultipliers.Add(1);
+            if (rowIndex != totalRows - 1) rowMultipliers.Add(1);
 
             var colMultipliers = new List<int> { 0 };
             if (colIndex != 0) colMultipliers.Add(-1);
-            if (colIndex != totalRows) colMultipliers.Add(1);
+            if (colIndex != totalCols - 1) colMultipliers.Add(1);
 
             var modifiers = new HashSet<Position>();
 
@@ -40,12 +40,6 @@ namespace MineSweeper
 
             modifiers.Remove(default(Position));
             return modifiers.Select(m => pos + m).ToList();
-        }
-
-        public static void ForEach<T>(this IEnumerable<T> iEnum, Action<T> action)
-        {
-            foreach (var item in iEnum)
-                action(item);
         }
 
         public static void Swap<T>(this IList<T> array, int a, int b)
