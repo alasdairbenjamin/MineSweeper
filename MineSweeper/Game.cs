@@ -22,11 +22,6 @@ namespace MineSweeper
             Bombs = bombs;
 
             _grid = new Tile[rows, cols];
-            for (var gridRow = 0; gridRow < rows; gridRow++)
-            {
-                for (var gridCol = 0; gridCol < cols; gridCol++)
-                    _grid[gridRow, gridCol] = new Tile();
-            }
         }
 
         public Tile this[int index]
@@ -46,7 +41,7 @@ namespace MineSweeper
             var gridPositions = new List<int>(_grid.Length);
             gridPositions = gridPositions.Select((cell, index) => index).ToList();
 
-            var bombPositions = FisherYatesShuffle.RandomSelection(bombCount, gridPositions);
+            var bombPositions = FisherYatesShuffle.RandomSelection(gridPositions, bombCount);
 
             for(var index = 0; index < _grid.Length; index++)
             {

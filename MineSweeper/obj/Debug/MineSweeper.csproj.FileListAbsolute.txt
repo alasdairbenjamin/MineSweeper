@@ -2,7 +2,6 @@ c:\users\alasdair\documents\visual studio 2015\Projects\MineSweeper\MineSweeper\
 C:\Users\alasdair\Documents\Projects\MineSweeper\MineSweeper\bin\Debug\MineSweeper.exe.config
 C:\Users\alasdair\Documents\Projects\MineSweeper\MineSweeper\bin\Debug\MineSweeper.exe
 C:\Users\alasdair\Documents\Projects\MineSweeper\MineSweeper\bin\Debug\MineSweeper.pdb
-C:\Users\alasdair\Documents\Projects\MineSweeper\MineSweeper\obj\Debug\MineSweeper.csprojResolveAssemblyReference.cache
 C:\Users\alasdair\Documents\Projects\MineSweeper\MineSweeper\obj\Debug\MainWindow.g.cs
 C:\Users\alasdair\Documents\Projects\MineSweeper\MineSweeper\obj\Debug\App.g.cs
 C:\Users\alasdair\Documents\Projects\MineSweeper\MineSweeper\obj\Debug\MineSweeper_MarkupCompile.cache

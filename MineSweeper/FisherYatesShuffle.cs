@@ -8,7 +8,7 @@ namespace MineSweeper
 {
     public static class FisherYatesShuffle
     {
-        public static int[] RandomSelection(int totalItemsToTake, IEnumerable<int> originalItems)
+        public static int[] RandomSelection(IEnumerable<int> originalItems, int totalItemsToTake, int? seed = null)
         {
             var itemsCopy = originalItems.ToArray();
 
@@ -21,12 +21,12 @@ namespace MineSweeper
             var itemsRemaining = totalItems;
             var itemsSelected = 0;
 
-            var random = new Random();
+            var random = seed == null ? new Random() : new Random((int)seed);
 
             while(itemsSelected < totalItemsToTake)
             {
-                var nextIndex = random.Next(itemsRemaining);
-                itemsToReturn[itemsSelected++] = itemsCopy[random.Next(itemsRemaining--)];
+                var nextIndex = random.Next(itemsRemaining--);
+                itemsToReturn[itemsSelected++] = itemsCopy[nextIndex];
                 itemsCopy.Swap(nextIndex, itemsRemaining);
             }
 
