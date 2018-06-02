@@ -37,5 +37,10 @@ namespace MineSweeper
                     Grid[gridRow, gridCol] = new Tile();
             }
         }
+
+        public Tile CreateTile(bool hasBomb)
+        {
+
+        }
     }
 }
