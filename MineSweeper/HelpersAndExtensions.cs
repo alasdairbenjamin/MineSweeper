@@ -8,14 +8,31 @@ namespace MineSweeper
 {
     public static class HelpersAndExtensions
     {
-        public static List<int> GetAdjacentPositions(int index, int totalRows, int totalCols)
+        public static int ConvertCoordsToSingleIndex(int row, int col, int totalCols)
         {
-            var multipliers = new[] { -1, 0, 1 };
-            var modifiers = new HashSet<int>();
+            return (row * totalCols + col);
+        }
 
-            foreach (var rowMultiplier in multipliers)
+        public static Tuple<int, int> ConvertSingleIndexToCoords(int combinedIndex, int totalCols)
+        {
+            return Tuple.Create(combinedIndex / totalCols, combinedIndex % totalCols);
+        }
+
+        public static List<Coords> GetAdjacentPositions2D(int rowIndex, int colIndex, int totalRows, int totalCols)
+        {
+            var rowMultipliers = new List<int> { 0 };
+            if (rowIndex != 0) rowMultipliers.Add(-1);
+            if (rowIndex != totalRows) rowMultipliers.Add(1);
+
+            var colMultipliers = new List<int> { 0 };
+            if (colIndex != 0) colMultipliers.Add(-1);
+            if (colIndex != totalRows) colMultipliers.Add(1);
+
+            var modifiers = new HashSet<Coords>();
+
+            foreach (var rowMultiplier in rowMultipliers)
             {
-                foreach (var colMultiplier in multipliers)
+                foreach (var colMultiplier in colMultipliers)
                     modifiers.Add(rowMultiplier * totalCols + colMultiplier * totalRows);
             }
 
@@ -23,9 +40,9 @@ namespace MineSweeper
             return modifiers.Select(m => index + m).Where(i => i >= 0 && i < totalRows * totalCols).ToList();
         }
 
-        public static void ForEach<T>(this IEnumerable<T> ienum, Action<T> action)
+        public static void ForEach<T>(this IEnumerable<T> iEnum, Action<T> action)
         {
-            foreach (var item in ienum)
+            foreach (var item in iEnum)
                 action(item);
         }
 
