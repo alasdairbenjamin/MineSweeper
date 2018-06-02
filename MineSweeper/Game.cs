@@ -8,39 +8,62 @@ namespace MineSweeper
 {
     public class Game
     {
-        private uint _bombs;
+        private int _bombs;
+        private Tile[,] _grid;
 
-        public uint Rows { get; set; }
-        public uint Columns { get; set; }
-        public uint Bombs
-        {
-            get { return _bombs; }
-            set
-            {
-                var maxBombs = Rows * Columns - 1;
-                _bombs = (value > maxBombs ? maxBombs : value);
-            }
-        }
+        public int Rows { get; set; }
+        public int Columns { get; set; }
+        public int Bombs { get; set; }
 
-        public Tile[,] Grid { get; set; }
-
-        public Game(uint rows, uint cols, uint bombs)
+        public Game(int rows, int cols, int bombs)
         {
             Rows = rows;
             Columns = cols;
             Bombs = bombs;
 
-            Grid = new Tile[rows, cols];
+            _grid = new Tile[rows, cols];
             for (var gridRow = 0; gridRow < rows; gridRow++)
             {
                 for (var gridCol = 0; gridCol < cols; gridCol++)
-                    Grid[gridRow, gridCol] = new Tile();
+                    _grid[gridRow, gridCol] = new Tile();
             }
         }
 
-        public Tile CreateTile(bool hasBomb)
+        public Tile this[int index]
         {
+            get { return _grid[index / Columns, index % Rows]; }
+            set { }
+        }
 
+        public Tile this[int rowIndex, int colIndex]
+        {
+            get { return _grid[rowIndex, colIndex]; }
+            set { _grid[rowIndex, colIndex] = value; }
+        }
+
+        public void SetupGrid(int bombs)
+        {
+            var random = new Random();
+
+            var gridPositions = new List<int>(_grid.Length);
+            var bombPositions = new int[bombs];
+
+            gridPositions = gridPositions.Select((cell, index) => index).ToList();
+
+            var bombPositionIndex = 0;
+            while(bombPositionIndex < bombs)
+            {
+                var index = random.Next(gridPositions.Count);
+                bombPositions[bombPositionIndex] = gridPositions[index];
+                gridPositions.RemoveAt(index);
+            }
+
+            for(var index = 0; index < _grid.Length; index++)
+            {
+                var neighbours = HelpersAndExtensions.GetAdjacentPositions(index, Rows, Columns);
+                var adjacentBombCount = neighbours.Intersect(bombPositions).Count();
+                this[index] = new Tile(adjacentBombCount, bombPositions.Contains(index));
+            }
         }
     }
 }

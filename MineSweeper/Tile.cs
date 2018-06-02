@@ -9,7 +9,7 @@ namespace MineSweeper
     public class Tile
     {
         private bool _containsBomb;
-        private uint _adjacentBombCount;
+        private int _adjacentBombCount;
 
         public bool? ContainsBomb
         {
@@ -20,11 +20,7 @@ namespace MineSweeper
             }
         }
 
-        public uint Row { get; set; }
-
-        public uint Col { get; set; }
-
-        public uint? AdjacentBombCount
+        public int? AdjacentBombCount
         {
             get
             {
@@ -35,18 +31,16 @@ namespace MineSweeper
 
         public bool Clicked { get; private set; }
 
-        public Tile(uint row, uint col, uint adjacentBombCount, bool containsBomb)
+        public Tile(int adjacentBombCount, bool containsBomb)
         {
-            Row = row;
-            Col = col;
             _adjacentBombCount = adjacentBombCount;
             _containsBomb = containsBomb;
             Clicked = false;
         }
 
-        public void IncrementAdjacentBombCount()
+        public void OnClick()
         {
-            _adjacentBombCount++;
+            Clicked = true;
         }
     }
 
