@@ -24,8 +24,8 @@ namespace MineSweeperUnitTests
             var game = new Game(rows, cols, bombTotalInput);
 
             //Assert
-            Assert.AreNotEqual(bombTotalInput, game.Bombs);
-            Assert.AreEqual(expectedBombCount, game.Bombs);
+            Assert.AreNotEqual(bombTotalInput, game.BombCount);
+            Assert.AreEqual(expectedBombCount, game.BombCount);
         }
     }
 }

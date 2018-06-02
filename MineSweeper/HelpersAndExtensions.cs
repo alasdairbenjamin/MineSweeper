@@ -8,18 +8,20 @@ namespace MineSweeper
 {
     public static class HelpersAndExtensions
     {
-        public static int ConvertCoordsToSingleIndex(int row, int col, int totalCols)
+        public static int ConvertPositionToSingleIndex(Position pos, int totalCols)
         {
-            return (row * totalCols + col);
+            return (pos.Row * totalCols + pos.Column);
         }
 
-        public static Tuple<int, int> ConvertSingleIndexToCoords(int combinedIndex, int totalCols)
+        public static Position ConvertSingleIndexToCoords(int combinedIndex, int totalCols)
         {
-            return Tuple.Create(combinedIndex / totalCols, combinedIndex % totalCols);
+            return new Position(combinedIndex / totalCols, combinedIndex % totalCols);
         }
 
-        public static List<Coords> GetAdjacentPositions2D(int rowIndex, int colIndex, int totalRows, int totalCols)
+        public static List<Position> GetNeighbours(Position pos, int totalRows, int totalCols)
         {
+            var rowIndex = pos.Row;
+            var colIndex = pos.Column;
             var rowMultipliers = new List<int> { 0 };
             if (rowIndex != 0) rowMultipliers.Add(-1);
             if (rowIndex != totalRows) rowMultipliers.Add(1);
@@ -28,16 +30,16 @@ namespace MineSweeper
             if (colIndex != 0) colMultipliers.Add(-1);
             if (colIndex != totalRows) colMultipliers.Add(1);
 
-            var modifiers = new HashSet<Coords>();
+            var modifiers = new HashSet<Position>();
 
             foreach (var rowMultiplier in rowMultipliers)
             {
                 foreach (var colMultiplier in colMultipliers)
-                    modifiers.Add(rowMultiplier * totalCols + colMultiplier * totalRows);
+                    modifiers.Add(new Position(rowMultiplier, colMultiplier));
             }
 
-            modifiers.Remove(0);
-            return modifiers.Select(m => index + m).Where(i => i >= 0 && i < totalRows * totalCols).ToList();
+            modifiers.Remove(default(Position));
+            return modifiers.Select(m => pos + m).ToList();
         }
 
         public static void ForEach<T>(this IEnumerable<T> iEnum, Action<T> action)

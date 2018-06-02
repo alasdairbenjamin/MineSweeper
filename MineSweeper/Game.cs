@@ -8,26 +8,20 @@ namespace MineSweeper
 {
     public class Game
     {
-        private int _bombs;
         private Tile[,] _grid;
 
         public int Rows { get; set; }
         public int Columns { get; set; }
-        public int Bombs { get; set; }
+        public int BombCount { get; set; }
 
         public Game(int rows, int cols, int bombs)
         {
             Rows = rows;
             Columns = cols;
-            Bombs = bombs;
+            BombCount = bombs;
 
             _grid = new Tile[rows, cols];
-        }
-
-        public Tile this[int index]
-        {
-            get { return _grid[index / Columns, index % Rows]; }
-            set { }
+            InitialiseGrid();
         }
 
         public Tile this[int rowIndex, int colIndex]
@@ -36,18 +30,31 @@ namespace MineSweeper
             set { _grid[rowIndex, colIndex] = value; }
         }
 
-        public void SetupGrid(int bombCount)
+        public Tile this[Position pos]
+        {
+            get { return _grid[pos.Row, pos.Column]; }
+            set { _grid[pos.Row, pos.Column] = value; }
+        }
+
+        public void InitialiseGrid()
         {
             var gridPositions = new List<int>(_grid.Length);
             gridPositions = gridPositions.Select((cell, index) => index).ToList();
 
-            var bombPositions = FisherYatesShuffle.RandomSelection(gridPositions, bombCount);
+            var bombPositions = 
+                FisherYatesShuffle.RandomSelection(gridPositions, BombCount)
+                    .Select(HelpersAndExtensions.ConvertSingleIndexToCoords)
+                        .ToList();
 
-            for(var index = 0; index < _grid.Length; index++)
+            for(var row = 0; row < _grid.GetLength(0); row++)
             {
-                var neighbours = HelpersAndExtensions.GetAdjacentPositions(index, Rows, Columns);
-                var adjacentBombCount = neighbours.Intersect(bombPositions).Count();
-                this[index] = new Tile(adjacentBombCount, bombPositions.Contains(index));
+                for(var col = 0; col < _grid.GetLength(1); col++)
+                {
+                    var position = new Position(row, col);
+                    var neighbours = HelpersAndExtensions.GetNeighbours(position, Rows, Columns);
+                    var adjacentBombCount = neighbours.Intersect(bombPositions).Count();
+                    this[position] = new Tile(adjacentBombCount, bombPositions.Contains(position));
+                }
             }
         }
     }

@@ -64,6 +64,7 @@
     <Compile Include="TestFisherYatesShuffle.cs" />
     <Compile Include="TestGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestHelpersAndExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
