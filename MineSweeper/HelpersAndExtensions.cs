@@ -28,5 +28,12 @@ namespace MineSweeper
             foreach (var item in ienum)
                 action(item);
         }
+
+        public static void Swap<T>(this IList<T> array, int a, int b)
+        {
+            var temp = array[a];
+            array[a] = array[b];
+            array[b] = temp;
+        }
     }
 }

@@ -41,22 +41,12 @@ namespace MineSweeper
             set { _grid[rowIndex, colIndex] = value; }
         }
 
-        public void SetupGrid(int bombs)
+        public void SetupGrid(int bombCount)
         {
-            var random = new Random();
-
             var gridPositions = new List<int>(_grid.Length);
-            var bombPositions = new int[bombs];
-
             gridPositions = gridPositions.Select((cell, index) => index).ToList();
 
-            var bombPositionIndex = 0;
-            while(bombPositionIndex < bombs)
-            {
-                var index = random.Next(gridPositions.Count);
-                bombPositions[bombPositionIndex] = gridPositions[index];
-                gridPositions.RemoveAt(index);
-            }
+            var bombPositions = FisherYatesShuffle.RandomSelection(bombCount, gridPositions);
 
             for(var index = 0; index < _grid.Length; index++)
             {
